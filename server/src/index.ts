@@ -1,7 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-import mysql from 'mysql2';
+import mysql, { RowDataPacket } from 'mysql2';
 import dotenv from 'dotenv';
+import bodyParser from 'body-parser';
+import { SuiteContext } from 'node:test';
 
 dotenv.config();
 
@@ -9,6 +11,7 @@ const app = express();
 const port = 3001;
 
 app.use(cors());
+app.use(bodyParser.json());
 
 const connection = mysql.createConnection({
     host: process.env.DB_HOST,
@@ -34,7 +37,7 @@ app.get('/api/data', (req, res) => {
 });
 
 app.get('/api/users', (req, res) => {
-    const query = 'SELECT * FROM test';
+    const query = 'SELECT * FROM users';
     connection.query(query, (error, results) => {
         if (error) {
             console.error('Error fetching data:', error);
@@ -43,6 +46,25 @@ app.get('/api/users', (req, res) => {
             res.json(results);
         }
     });
+});
+
+app.post('/api/login', (req, res) => {
+    const {username, password} = req.body;
+
+    const query = `SELECT * FROM users WHERE username = ? AND password = ?`;
+    connection.query(query, [username,password], (error, results : RowDataPacket[] ) => {
+        if(error) {
+            console.error('Error fetching data:', error);
+            res.status(500).send('Error fetching data');
+            return
+        }
+
+        if(results.length  > 0) {
+            res.json({ success: true })
+        } else {
+            res.json({ success: false, message: 'Invalid credentials'})
+        }
+    })
 });
 
 app.listen(port, () => {
