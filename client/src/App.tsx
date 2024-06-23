@@ -5,13 +5,14 @@ import axios from 'axios';
 import Home from "./pages/Home";
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Main from "./pages/Main";
 
 const App: React.FC = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [message, setMessage] = useState<string>('');
 
-  const handleFormSubmit = async (event : React.FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
@@ -20,8 +21,8 @@ const App: React.FC = () => {
         password
       });
       const data = response.data;
-      
-      if(data.success) {
+
+      if (data.success) {
         setMessage('Login successful');
       } else {
         setMessage('Login failed:' + data.message);
@@ -35,9 +36,11 @@ const App: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<Home />}/>
-        <Route path='/login' element={<Login />}/>
-        <Route path='/register' element={<Register />}/>
+        <Route path="/" element={<Main />}>
+          <Route path='/home' element={<Home />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+        </Route>
       </Routes>
     </Router>
     // <div>
