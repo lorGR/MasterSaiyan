@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
+
+import Home from "./pages/Home";
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 const App: React.FC = () => {
   const [username, setUsername] = useState<string>('');
@@ -28,27 +33,34 @@ const App: React.FC = () => {
   }
 
   return (
-    <div>
-      <h1>Login</h1>
-      <form onSubmit={handleFormSubmit}>
-        <label htmlFor="username">Username:</label>
-        <input
-          id='username'
-          type="text" 
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <label htmlFor="password">Password:</label>
-        <input
-          id='password'
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">submit</button>
-      </form>
-      {message && <p>{message}</p>}
-    </div>
+    <Router>
+      <Routes>
+        <Route path='/' element={<Home />}/>
+        <Route path='/login' element={<Login />}/>
+        <Route path='/register' element={<Register />}/>
+      </Routes>
+    </Router>
+    // <div>
+    //   <h1>Login</h1>
+    //   <form onSubmit={handleFormSubmit}>
+    //     <label htmlFor="username">Username:</label>
+    //     <input
+    //       id='username'
+    //       type="text" 
+    //       value={username}
+    //       onChange={(e) => setUsername(e.target.value)}
+    //     />
+    //     <label htmlFor="password">Password:</label>
+    //     <input
+    //       id='password'
+    //       type="password"
+    //       value={password}
+    //       onChange={(e) => setPassword(e.target.value)}
+    //     />
+    //     <button type="submit">submit</button>
+    //   </form>
+    //   {message && <p>{message}</p>}
+    // </div>
   )
 }
 
