@@ -14,7 +14,7 @@ export async function loginUser(req: express.Request, res: express.Response) {
         }
 
         if(results.length  > 0) {
-            res.json({ success: true })
+            res.json({ success: true , message: 'Login Succesfully'})
         } else {
             res.json({ success: false, message: 'Invalid credentials'})
         }
