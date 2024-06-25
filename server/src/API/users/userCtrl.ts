@@ -1,6 +1,7 @@
 import express from 'express'
 import { RowDataPacket } from 'mysql2';
 import { connection } from "../../index";
+import LoginResponse from '../../../../client/src/models/loginResponse';
 
 export async function loginUser(req: express.Request, res: express.Response) {
     const {username, password} = req.body;
@@ -14,9 +15,11 @@ export async function loginUser(req: express.Request, res: express.Response) {
         }
 
         if(results.length  > 0) {
-            res.json({ success: true , message: 'Login Succesfully'})
+            const successResponse: LoginResponse = { success: true, message: 'Login Successfully'};
+            res.send(successResponse)
         } else {
-            res.json({ success: false, message: 'Invalid credentials'})
+            const invalidResponse: LoginResponse = { success: false, message: 'Invalid Credentials'};
+            res.send(invalidResponse)
         }
     })
 }

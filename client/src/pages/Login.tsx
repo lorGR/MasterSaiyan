@@ -5,10 +5,12 @@ import { handleLogin } from "../utils/utils";
 const Login: React.FC = () => {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const [message, setMessage] = useState<string>('');
 
     async function handleLoginSubmitted(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        handleLogin(username, password);
+        const loginMessage = await handleLogin(username, password);
+        loginMessage ? setMessage(loginMessage) : setMessage('')
     }
 
     return (
@@ -20,9 +22,9 @@ const Login: React.FC = () => {
 
                 <label htmlFor="password">Password:</label>
                 <input type="password" name="username" id="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-
                 <button type="submit">Login</button>
             </form>
+            {message.length > 0 && <p>{message}</p>}
         </div>
     )
 }
