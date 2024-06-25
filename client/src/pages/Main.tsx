@@ -7,9 +7,6 @@ const Main:React.FC = () => {
     return (
         <div>
             <Navbar></Navbar>
-            {/* <a href="/login">login</a>
-            <a href="/register">register</a>
-            <a href="/home">home</a> */}
             <Outlet />
         </div>
     )
