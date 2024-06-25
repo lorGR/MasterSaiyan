@@ -3,7 +3,7 @@ import { ButtonModel } from "../../models/buttonModel";
 
 const Button = (buttonModel : ButtonModel) => {
     return (
-        <Link to={buttonModel.textLabel}>
+        <Link to={buttonModel.link}>
             {buttonModel.textLabel}
         </Link>
     )

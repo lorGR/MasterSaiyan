@@ -1,3 +1,4 @@
 export interface ButtonModel {
-    textLabel: string
+    textLabel: string,
+    link: string
 }
